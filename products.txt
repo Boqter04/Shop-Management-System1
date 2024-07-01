@@ -1,1 +1,0 @@
-OldProduct: SKU: 123, NAME: pp, MODEL: mm, YEAR: 1002, Discount: 10%

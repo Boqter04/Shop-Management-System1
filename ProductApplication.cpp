@@ -1,4 +1,3 @@
-
 #pragma once
 #include <iostream>
 #include <vector>
@@ -28,10 +27,17 @@ private:
         std::cout << std::endl;
     }
 public:
-
+    enum MenuChoice {
+        ADD_PRODUCT = 1,
+        EDIT_PRODUCT,
+        DELETE_PRODUCT,
+        VIEW_PRODUCTS,
+        SEARCH_PRODUCT,
+        EXIT
+    };
+    
     // Run the Product management application
     void run() {
-
         ProductManager manager;
         int choice;
 
@@ -41,7 +47,7 @@ public:
             choice = DataValidInput::getIntInput("Enter your choice: ");
             try {
                 switch (choice) {
-                    case 1: {
+                    case ADD_PRODUCT: {
                         std::string name, model;
                         int year, sku;
                         int type;
@@ -55,7 +61,7 @@ public:
                         manager.addProduct(sku, name, model, year, type);
                         break;
                     }
-                    case 2: {
+                    case EDIT_PRODUCT: {
                         int sku;
                         sku = DataValidInput::getIntInput("Enter product SKU: ");
                         DataValidInput::validateSku(sku);
@@ -63,24 +69,24 @@ public:
                         manager.editProduct(sku);
                         break;
                     }
-                    case 3: {
+                    case DELETE_PRODUCT: {
                         int sku;
                         sku = DataValidInput::getIntInput("Enter Product SKU: ");
-                        DataValidInput::validateAddress(sku);
+                        DataValidInput::validateSku(sku);
                         manager.deleteProduct(sku);
                         break;
                     }
-                    case 4:
+                    case VIEW_PRODUCTS:
                         DataValidInput::SetColor(3);
                         manager.viewProducts();
                         break;
-                    case 5: {
+                    case SEARCH_PRODUCT: {
                         std::string name;
                         name = DataValidInput::getStringInput("Enter Product name: ");
                         manager.searchProductByName(name);
                         break;
                     }
-                    case 6:
+                    case EXIT:
                         done = true;
                         break;
                     default:

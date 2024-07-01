@@ -14,9 +14,10 @@ protected:
     std::string name;
     std::string model;
     int year;
-     
 
 public:
+    Product(){}
+    
     Product(int sku, const std::string& name, const std::string& model, int year )
         : sku(sku), name(name), model(model), year(year) {}
 
@@ -53,6 +54,7 @@ public:
     }
 
     static void displayHeader() {
+        std::cout << "\n";
         std::cout << std::left << std::setw(20) << "Type"
                   << std::setw(15) << "SKU"
                   << std::setw(15) << "NAME"
@@ -87,5 +89,4 @@ public:
         ifs >> year;
         ifs.ignore();
     }
-
 };

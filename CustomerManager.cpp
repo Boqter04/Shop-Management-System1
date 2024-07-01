@@ -17,9 +17,9 @@ private:
     std::vector<Customer*> customers;
     const std::string filename = "customers.dat";
 
-    Customer* findCustomerByAddress(int address) {
-        auto it = std::find_if(customers.begin(), customers.end(), [address](Customer* customer) {
-            return customer->getAddress() == address;
+    Customer* findCustomerById(int id) {
+        auto it = std::find_if(customers.begin(), customers.end(), [id](Customer* customer) {
+            return customer->getId() == id;
         });
         return (it != customers.end()) ? *it : nullptr;
     }
@@ -80,13 +80,13 @@ public:
         }
     }
 
-    void addCustomer(int address, const std::string& name, const std::string& phone, int type) override {
+    void addCustomer(const std::string& name, int id, const std::string& phone, const std::string& address, int type) override {
         if (type == 1) {
             double price = DataValidInput::getDoubleInput("Enter the total amount for the old customer: ");
-            customers.push_back(new OldCustomer(name, address, phone, price));
+            customers.push_back(new OldCustomer(name, id, phone, address, price));
         } else if (type == 2) {
             double price = DataValidInput::getDoubleInput("Enter the total amount for the new customer: ");
-            customers.push_back(new NewCustomer(name, address, phone, price));
+            customers.push_back(new NewCustomer(name, id, phone, address, price));
         } else {
             DataValidInput::SetColor(12);
             throw std::invalid_argument("Invalid customer type.");
@@ -95,8 +95,8 @@ public:
         std::cout << "Customer added successfully.\n";
     }
 
-    void editCustomer(int address) override {
-        Customer* customer = findCustomerByAddress(address);
+    void editCustomer(int id) override {
+        Customer* customer = findCustomerById(id);
         if (customer == nullptr) {
             DataValidInput::SetColor(12);
             throw std::invalid_argument("Customer not found");
@@ -104,16 +104,18 @@ public:
 
         std::string newName = DataValidInput::getStringInput("Enter new customer name: ");
         std::string newPhone = DataValidInput::getStringInput("Enter new customer phone number: ");
+        std::string newAddress = DataValidInput::getStringInput("Enter new customer address: ");
 
         customer->setName(newName);
         customer->setPhone(newPhone);
+        customer->setAddress(newAddress);
         saveAllCustomers();
         std::cout << "Customer updated successfully.\n";
     }
 
-    void deleteCustomer(int address) override {
-        auto it = std::find_if(customers.begin(), customers.end(), [address](Customer* customer) {
-            return customer->getAddress() == address;
+    void deleteCustomer(int id) override {
+        auto it = std::find_if(customers.begin(), customers.end(), [id](Customer* customer) {
+            return customer->getId() == id;
         });
 
         if (it != customers.end()) {
@@ -148,7 +150,12 @@ public:
         Customer::displayHeader();
         for (const auto& customer : customers) {
             customer->display();
+            loadAllCustomers();
         }
+
+        // Adding "press any key to continue" functionality
+        std::cout << "\nPress any key to continue...";
+        std::cin.get();  // Waits for user to press any key
     }
 
     void searchCustomerByPhone(const std::string& phone) override {
@@ -160,5 +167,8 @@ public:
             Customer::displayHeader();
             customer->display();
         }
+        // Adding "press any key to continue" functionality
+        std::cout << "\nPress any key to continue...";
+        std::cin.get();  // Waits for user to press any key
     }
 };

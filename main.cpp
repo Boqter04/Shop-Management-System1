@@ -5,9 +5,9 @@
 using namespace std;
 
 int main() {
-   
+
     LoginManager loginmanager;
     loginmanager.menu();
-
+       
     return 0;
 }

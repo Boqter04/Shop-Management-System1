@@ -10,7 +10,6 @@
 #include "DataValidInput.cpp"
 #include "User.cpp"
 #include <cstdlib> 
- 
 
 using namespace std;
 
@@ -26,7 +25,7 @@ public:
     LoginManager() {
         loadUsers();
     }
-
+     
     void loadUsers() {
         ifstream file(usersFile, ios::binary);
         if (file.is_open()) {
@@ -35,10 +34,7 @@ public:
                 users.push_back(user);
             }
             file.close();
-        } else {
-            DataValidInput::SetColor(12);
-            cerr << "Could not open file " << usersFile << " for reading." << endl;
-        }
+        }  
     }
 
     void saveUsers() {
@@ -116,7 +112,7 @@ public:
     }
 
     void adminMenu() {
-        enum MainMenu {EXIT, STUDENT, USER};
+        enum MainMenu {EXIT, CUSTOMER, PRODUCT};
         int choice;
         cout.setf(ios::fixed | ios::showpoint);
         cout << setprecision(2);
@@ -129,22 +125,20 @@ public:
             cout << "\t||- **************** -||\n";
             cout << "\n1. Customer Management\n";
             cout << "2. Product Management\n";
-            cout << "0. Exit\n";
+            cout << "3. Logout\n";
             choice = DataValidInput::getIntInput("Enter your choice: ");
             switch (choice) {
-                case STUDENT: {
+                case CUSTOMER: {
                     CustomerApplication customerApp;
                     customerApp.run();
-                    //system("cls");
                     break;
                 }
-                case USER:
+                case PRODUCT:
                     ProductApplication productApp;
                     productApp.run();
-                    //system("cls");
                     break;
                 case EXIT:
-                    cout << "Exit Program" << endl;
+                    menu();
                     break;
                 default:
                     cout << "Invalid input" << endl;
@@ -176,7 +170,7 @@ public:
                     system("cls");
                     break;
                 case 3:
-                    LoginManager();
+                    menu();
                     break;
                 default:
                     DataValidInput::SetColor(12);

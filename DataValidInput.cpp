@@ -1,5 +1,3 @@
-
-
 #pragma once
 #include <iostream>
 #include <vector>
@@ -14,10 +12,10 @@
 // Utility class for data validation and input
 class DataValidInput {
 public:
-    // Validate the address to ensure it's positive
-    static void validateAddress(int address) {
-        if (address <= 0) {
-            throw std::invalid_argument("Address must be a positive integer.");
+    // Validate the Id to ensure it's positive
+    static void validateId(int id) {
+        if (id <= 0) {
+            throw std::invalid_argument("ID must be a positive integer.");
         }
     }
     // Validate the sku to ensure it's positive

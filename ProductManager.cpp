@@ -148,7 +148,12 @@ public:
         Product::displayHeader();
         for (const auto& product : products) {
             product->display();
+            loadAllProducts();
         }
+
+        // Adding "press any key to continue" functionality
+        std::cout << "\nPress any key to continue...";
+        std::cin.get();  // Waits for user to press any key
     }
 
     void searchProductByName(const std::string& phone) override {
@@ -160,5 +165,9 @@ public:
             Product::displayHeader();
             product->display();
         }
+        
+        // Adding "press any key to continue" functionality
+        std::cout << "\nPress any key to continue...";
+        std::cin.get();  // Waits for user to press any key
     }
 };

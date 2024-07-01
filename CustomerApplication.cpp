@@ -1,4 +1,3 @@
-
 #pragma once
 #include <iostream>
 #include <vector>
@@ -27,60 +26,68 @@ private:
         std::cout << "6. Back to Main Menu\n";
         std::cout << std::endl;
     }
+    
 public:
+    enum MenuChoice {
+        ADD_CUSTOMER = 1,
+        EDIT_CUSTOMER,
+        DELETE_CUSTOMER,
+        VIEW_CUSTOMERS,
+        SEARCH_CUSTOMER,
+        EXIT
+    };
 
     // Run the customer management application
     void run() {
 
         CustomerManager manager;
         int choice;
-
         bool done = false;
         while (!done) {
             displayMenu();
             choice = DataValidInput::getIntInput("Enter your choice: ");
             try {
                 switch (choice) {
-                    case 1: {
-                        std::string name, phone;
-                        //std::string phone;
-                        int address;
+                    case ADD_CUSTOMER: {
+                        std::string name, phone, address;
+                        int id;
                         int type;
 
                         name = DataValidInput::getStringInput("Enter customer name: ");
-                        address = DataValidInput::getIntInput("Enter customer address: ");                       
+                        id = DataValidInput::getIntInput("Enter customer id: ");                 
                         phone = DataValidInput::getStringInput("Enter customer phone number: ");
-                        DataValidInput::validateAddress(address);
+                        address = DataValidInput::getStringInput("Enter customer address: ");
+                        DataValidInput::validateId(id);
                         type = DataValidInput::getIntInput("Enter 1 for Old Customer, 2 for New Customer: ");
-                        manager.addCustomer(address, name, phone, type);
+                        manager.addCustomer(name, id, phone, address, type);
                         break;
                     }
-                    case 2: {
-                        int address;
-                        address = DataValidInput::getIntInput("Enter customer address: ");
-                        DataValidInput::validateAddress(address);
+                    case EDIT_CUSTOMER: {
+                        int id;
+                        id = DataValidInput::getIntInput("Enter customer id: ");
+                        DataValidInput::validateId(id);
 
-                        manager.editCustomer(address);
+                        manager.editCustomer(id);
                         break;
                     }
-                    case 3: {
-                        int address;
-                        address = DataValidInput::getIntInput("Enter customer address: ");
-                        DataValidInput::validateAddress(address);
-                        manager.deleteCustomer(address);
+                    case DELETE_CUSTOMER: {
+                        int id;
+                        id = DataValidInput::getIntInput("Enter customer id: ");
+                        DataValidInput::validateId(id);
+                        manager.deleteCustomer(id);
                         break;
                     }
-                    case 4:
+                    case VIEW_CUSTOMERS:
                         DataValidInput::SetColor(3);
                         manager.viewCustomers();
                         break;
-                    case 5: {
+                    case SEARCH_CUSTOMER: {
                         std::string phone;
                         phone = DataValidInput::getStringInput("Enter customer phone: ");
                         manager.searchCustomerByPhone(phone);
                         break;
                     }
-                    case 6:
+                    case EXIT:
                         done = true;
                         break;
                     default:
